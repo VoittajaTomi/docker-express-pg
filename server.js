@@ -4,10 +4,14 @@ const morgan = require('morgan');
 const clientSession = require('client-sessions');
 const helmet = require('helmet');
 
+const cors = require('cors');
+
 const {SESSION_SECRET} = require('./config');
 
 const app = express();
 const api = require('./src/api');
+app.use(cors());//asdasd
+
 
 //app.get('/', (request, response) => response.sendStatus(200));
 app.get('/health', (request, response) => response.sendStatus(200));
@@ -38,6 +42,10 @@ db.sequelize.sync({force: true}).then(() => {
 let router = require('./src/routers/file.router.js');
 app.use(express.static('resources'));
 app.use('/',router);
+
+
+
+
 
 let server;
 module.exports = {
