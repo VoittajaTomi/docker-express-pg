@@ -6,7 +6,7 @@ const File = db.files;
 exports.uploadFile = (req, res) => {
   console.log(req);
   File.create({
-    type: 'multipart/form-data', //req.file.mimetype,
+    type: 'multipart/form-data',
     name: req.file.originalname,
     data: req.file.buffer
   }).then(file => {
@@ -15,7 +15,7 @@ exports.uploadFile = (req, res) => {
                 const result = {
                         status: "ok",
                         filename: req.file.originalname,
-                        message: "Upload Successfully!",
+                        message: "Upload Successful!",
                         downloadUrl: "http://localhost:3000/api/file/" + file.dataValues.id,
                 }
 
@@ -42,14 +42,8 @@ exports.listAllFiles = (req, res) => {
 }
 exports.downloadFile = (req, res) => {
         File.findByPk(req.params.id).then(file => {
-                //console.log(file);
-                //file.times_downloaded++;
-                File.update({times_downloaded: file.times_downloaded+1}, { where: {id: req.params.id }}).then((result) => {
-                  return result;
-                  }).catch(e => {
-                    console.log(e);
-                });
-                console.log(file);
+
+
                 var fileContents = Buffer.from(file.data, "base64");
                 var readStream = new stream.PassThrough();
                 readStream.end(fileContents);
@@ -58,6 +52,12 @@ exports.downloadFile = (req, res) => {
                 res.set('Content-Type', file.type);
 
                 readStream.pipe(res);
+                File.update({times_downloaded: file.times_downloaded+1}, { where: {id: req.params.id }}).then((result) => {
+                  return result;
+                  }).catch(e => {
+                    console.log(e);
+                });
+
         }).catch(err => {
                 console.log(err);
                 res.json({msg: 'Error', detail: err});
