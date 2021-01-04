@@ -4,16 +4,32 @@ const db = require('../config/db.config.js');
 const File = db.files;
 
 exports.uploadFile = (req, res) => {
+  console.log(req);
   File.create({
-    type: req.file.mimetype,
+    type: 'multipart/form-data', //req.file.mimetype,
     name: req.file.originalname,
     data: req.file.buffer
-  }).then(() => {
-    res.json({msg:'File uploaded successfully! -> filename = ' + req.file.originalname});
-  }).catch(err => {
-    console.log(err);
-    res.json({msg: 'Error', detail: err});
-  });
+  }).then(file => {
+                console.log(file);
+
+                const result = {
+                        status: "ok",
+                        filename: req.file.originalname,
+                        message: "Upload Successfully!",
+                        downloadUrl: "http://localhost:8080/api/file/" + file.dataValues.id,
+                }
+
+                res.json(result);
+        }).catch(err => {
+                console.log(err);
+
+                const result = {
+                        status: "error",
+                        error: err
+                }
+                res.json(result);
+        });
+
 }
 
 exports.listAllFiles = (req, res) => {
@@ -24,19 +40,19 @@ exports.listAllFiles = (req, res) => {
     res.json({msg: 'Error', detail: err});
   });
 }
-
 exports.downloadFile = (req, res) => {
-  File.findById(req.params.id).then(file => {
-    var fileContents = Buffer.from(file.data, "base64");
-    var readStream = new stream.PassThrough();
-    readStream.end(fileContents);
+        File.findByPk(req.params.id).then(file => {
+                var fileContents = Buffer.from(file.data, "base64");
+                var readStream = new stream.PassThrough();
+                readStream.end(fileContents);
 
-    res.set('Content-disposition', 'attachment; filename=' + file.name);
-    res.set('Content-Type', file.type);
+                res.set('Content-disposition', 'attachment; filename=' + file.name);
+                res.set('Content-Type', file.type);
 
-    readStream.pipe(res);
-  }).catch(err => {
-    console.log(err);
-    res.json({msg: 'Error', detail: err});
-  });
+                readStream.pipe(res);
+        }).catch(err => {
+                console.log(err);
+                res.json({msg: 'Error', detail: err});
+        });
 }
+

@@ -1,6 +1,10 @@
-# Express Postgres Starter
+## Api
 
-> A starter project for Node.js with Express and Postgres
+- curl -i -X POST -F 'file=@file.tar.gz' http://localhost:3000/api/file/upload
+- curl -i http://localhost:3000/api/file/1
+
+
+
 
 ## Setup
 

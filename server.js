@@ -4,7 +4,6 @@ const morgan = require('morgan');
 const clientSession = require('client-sessions');
 const helmet = require('helmet');
 
-//const cors = require('cors');
 
 const {SESSION_SECRET} = require('./config');
 
@@ -26,8 +25,12 @@ app.use(
     duration: 24 * 60 * 60 * 1000
   })
 );
-app.use(helmet());
-
+//app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+    );
 app.use(api);
 
 global.__basedir = __dirname;
