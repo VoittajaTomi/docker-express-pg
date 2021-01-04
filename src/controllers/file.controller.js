@@ -16,7 +16,7 @@ exports.uploadFile = (req, res) => {
                         status: "ok",
                         filename: req.file.originalname,
                         message: "Upload Successfully!",
-                        downloadUrl: "http://localhost:8080/api/file/" + file.dataValues.id,
+                        downloadUrl: "http://localhost:3000/api/file/" + file.dataValues.id,
                 }
 
                 res.json(result);
@@ -43,14 +43,12 @@ exports.listAllFiles = (req, res) => {
 exports.downloadFile = (req, res) => {
         File.findByPk(req.params.id).then(file => {
                 //console.log(file);
-                file.times_downloaded++;
-                File.update(file).then((result) => {
-                  // here result will be [ 1 ], if the id column is unique in your table
-                  // the problem is that you can't return updated instance, you would have to retrieve it from database once again
+                //file.times_downloaded++;
+                File.update({times_downloaded: file.times_downloaded+1}, { where: {id: req.params.id }}).then((result) => {
                   return result;
                   }).catch(e => {
                     console.log(e);
-                });;
+                });
                 console.log(file);
                 var fileContents = Buffer.from(file.data, "base64");
                 var readStream = new stream.PassThrough();

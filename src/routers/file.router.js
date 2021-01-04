@@ -7,7 +7,6 @@ const fileWorker = require('../controllers/file.controller.js');
 let path = __basedir + '/views/';
 
 router.get('/', (req,res) => {
-     console.log('kakka perse');
     res.sendFile(path + "index.html");
 });
 
