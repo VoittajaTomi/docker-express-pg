@@ -8,6 +8,10 @@ module.exports = (sequelize, Sequelize) => {
     },
     data: {
       type: Sequelize.BLOB('long')
+    },
+    times_downloaded: {
+      type: Sequelize.INTEGER,
+      defaultValue: 0
     }
   });
 

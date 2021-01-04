@@ -33,7 +33,7 @@ exports.uploadFile = (req, res) => {
 }
 
 exports.listAllFiles = (req, res) => {
-  File.findAll({attributes: ['id', 'name']}).then(files => {
+  File.findAll({attributes: ['id', 'name','times_downloaded']}).then(files => {
     res.json(files);
   }).catch(err => {
     console.log(err);
@@ -42,6 +42,9 @@ exports.listAllFiles = (req, res) => {
 }
 exports.downloadFile = (req, res) => {
         File.findByPk(req.params.id).then(file => {
+                //console.log(file);
+                file.times_downloaded++;
+                console.log(file);
                 var fileContents = Buffer.from(file.data, "base64");
                 var readStream = new stream.PassThrough();
                 readStream.end(fileContents);
