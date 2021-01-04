@@ -34,11 +34,9 @@ The default Docker `CMD` is `npm start`, [./docker-compose.yaml](./docker-compos
 
 The Express API is located in [./src/api](./src/api).
 
-Applications routes for resources are defined in [./src/api/index.js](./src/api/index.js).
+Applications routes for resources are defined in [./src/routers/file.router.js](./src/routers/file.router.js).
 
 Global concerns like security, cookie parsing, body parsing and request logging are handled in [./server.js](./server.js).
-
-This application loosely follows the [Presentation Domain Data Layering](https://www.martinfowler.com/bliki/PresentationDomainDataLayering.html):
 
 - Presentation is dealt with in the `./src/api` folder
 - Domain is dealt with in the `./src/modules` folder. It's currently non-existent since we've only got generic user and session resources.
