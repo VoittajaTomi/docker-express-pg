@@ -12,10 +12,8 @@ exports.uploadFile = (req, res) => {
   File.create({
     type: 'multipart/form-data',
     name: req.file.originalname,
-    //data: req.file.buffer
   }).then(file => {
                 console.log(file);
-                console.log('1111111111111111111111111111111111111111111111111111');
                 const result = {
                         status: "ok",
                         filename: req.file.originalname,
