@@ -2,7 +2,7 @@
 
 - Upload file: curl -i -X POST -F 'file=@file.tar.gz' http://localhost:3000/api/file/upload
 - List all files: http://localhost:3000/api/file/info
-- Download file: curl -i http://localhost:3000/api/file/1
+- Download file: http://localhost:3000/api/file/1
 
 
 
