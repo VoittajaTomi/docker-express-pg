@@ -1,4 +1,5 @@
 var stream = require('stream');
+var fs = require('fs');
 
 const db = require('../config/db.config.js');
 const File = db.files;
@@ -8,10 +9,11 @@ exports.uploadFile = (req, res) => {
   File.create({
     type: 'multipart/form-data',
     name: req.file.originalname,
-    data: req.file.buffer
+    upload_time: req.timestamp
+    //data: req.file.buffer
   }).then(file => {
                 console.log(file);
-
+                console.log('1111111111111111111111111111111111111111111111111111');
                 const result = {
                         status: "ok",
                         filename: req.file.originalname,
@@ -44,9 +46,10 @@ exports.downloadFile = (req, res) => {
         File.findByPk(req.params.id).then(file => {
 
 
-                var fileContents = Buffer.from(file.data, "base64");
-                var readStream = new stream.PassThrough();
-                readStream.end(fileContents);
+                console.log(file);
+
+                var readStream = fs.createReadStream('uploads/'+file.upload_time+'-'+file.name+'.file´');
+
 
                 res.set('Content-disposition', 'attachment; filename=' + file.name);
                 res.set('Content-Type', file.type);

@@ -6,8 +6,8 @@ module.exports = (sequelize, Sequelize) => {
     name: {
       type: Sequelize.STRING
     },
-    data: {
-      type: Sequelize.BLOB('long')
+    upload_time: {
+      type: Sequelize.STRING
     },
     times_downloaded: {
       type: Sequelize.INTEGER,
