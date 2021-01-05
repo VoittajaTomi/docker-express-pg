@@ -38,17 +38,13 @@ global.__basedir = __dirname;
 const db = require('./src/config/db.config.js');
 
 // force: true will drop the table if it already exists
-db.sequelize.sync({force: false}).then(() => {
+db.sequelize.sync({force: true}).then(() => {
   console.log('Drop and Resync with { force: true }');
 });
 
 let router = require('./src/routers/file.router.js');
 app.use(express.static('resources'));
 app.use('/',router);
-
-
-
-
 
 let server;
 module.exports = {

@@ -12,6 +12,9 @@ module.exports = (sequelize, Sequelize) => {
     times_downloaded: {
       type: Sequelize.INTEGER,
       defaultValue: 0
+    },
+    filesize: {
+      type: Sequelize.INTEGER
     }
   });
 

@@ -12,6 +12,7 @@ exports.uploadFile = (req, res) => {
   File.create({
     type: 'multipart/form-data',
     name: req.file.originalname,
+    filesize: req.file.size
   }).then(file => {
                 console.log(file);
                 const result = {
@@ -48,7 +49,7 @@ exports.downloadFile = (req, res) => {
 
                 console.log(file);
 
-                var readStream = fs.createReadStream('uploads/'+file.name+'.file');
+                var readStream = fs.createReadStream('uploads/'+file.name);
 
 
                 res.set('Content-disposition', 'attachment; filename=' + file.name);
