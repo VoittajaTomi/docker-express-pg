@@ -4,12 +4,14 @@ var fs = require('fs');
 const db = require('../config/db.config.js');
 const File = db.files;
 
+
+
+
 exports.uploadFile = (req, res) => {
   console.log(req);
   File.create({
     type: 'multipart/form-data',
     name: req.file.originalname,
-    upload_time: req.timestamp
     //data: req.file.buffer
   }).then(file => {
                 console.log(file);
@@ -48,7 +50,7 @@ exports.downloadFile = (req, res) => {
 
                 console.log(file);
 
-                var readStream = fs.createReadStream('uploads/'+file.upload_time+'-'+file.name+'.file´');
+                var readStream = fs.createReadStream('uploads/'+file.name+'.file');
 
 
                 res.set('Content-disposition', 'attachment; filename=' + file.name);
