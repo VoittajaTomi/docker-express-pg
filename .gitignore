@@ -1,5 +1,5 @@
 core
-uploads/*
+uploads/*.file
 # Logs
 logs
 *.log
