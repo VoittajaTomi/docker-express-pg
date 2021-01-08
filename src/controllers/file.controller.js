@@ -52,7 +52,7 @@ exports.downloadFile = (req, res) => {
                 var readStream = fs.createReadStream('uploads/'+file.name);
 
 
-                res.set('Content-disposition', 'attachment; filename=' + file.name);
+                res.set('Content-disposition', 'attachment; filename=' + file.name + '; size='+file.size);
                 res.set('Content-Type', file.type);
 
                 readStream.pipe(res);
